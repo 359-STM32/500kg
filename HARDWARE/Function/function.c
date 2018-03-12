@@ -201,10 +201,10 @@ void UserConfigInit(void)
 	//获取所有系统参数
 	GetAllParameterFromSystem();
 
-	if(SystemParameter[0]!=5)
+	if(SystemParameter[0]!=6)
 	{
 		//判断标志位
-		SystemParameter[0]=5;
+		SystemParameter[0]=6;
 		
 		//备用
 		SystemParameter[1]=0;
@@ -344,7 +344,7 @@ void UserConfigInit(void)
 	//初始化参数
 	HmiRouteNum = SystemParameter[6];   //路径号
 	HmiProcessNum = SystemParameter[7]; //流程号
-	HmiTask = SystemParameter[8]; //任务号
+//	HmiTask = SystemParameter[8]; //任务号
 	
 	HmiAutoReload();
 	
@@ -357,6 +357,8 @@ void UserConfigInit(void)
 	PLC_OutPut[0] = 0;//默认不显示自动/手动
 	PLC_OutPut[1] = 0;//默认不显示停留时间
 	PLC_OutPut[2] = 0;//默认不不可以输入，插入站点时可以输入
+	HmiTask = 0;
+	
 	
 	SouDongSuDu = SystemParameter[14];
 	ZiDongJiSu = SystemParameter[15];

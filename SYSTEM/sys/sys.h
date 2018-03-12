@@ -27,7 +27,6 @@
 #include "function.h"
 #include "includes.h"
 #include "iwdg.h"
-#include <arm_math.h>
 #include "route.h"
 #include "read.h"
 //////////////////////////////////////////////////////////////////////////////////	 

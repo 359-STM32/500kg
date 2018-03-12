@@ -105,7 +105,7 @@ void CAN1_RX0_IRQHandler(void)
 			CAN1_Send_Msg(CAN1_Sebuf,4);
 		}		
 	}
-	if(RxMessage.StdId==0x13)
+	if(RxMessage.StdId==10)
 	{
 		QianZuoLeiDa = RxMessage.Data[0];//Ç°×ó
 		QianYouLeiDa = RxMessage.Data[1];//Ç°ÓÒ

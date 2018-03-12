@@ -1,5 +1,5 @@
 #include "sys.h"
-
+#include "regex.h"
 //将这些优先级分配给了UCOSIII的5个系统内部任务
 //优先级0：中断服务服务管理任务 OS_IntQTask()
 //优先级1：时钟节拍任务 OS_TickTask()
@@ -109,18 +109,6 @@ void WIFI_task(void *p_arg);
 
 
 //任务优先级
-#define Screen_TASK_PRIO		12
-//任务堆栈大小	
-#define Screen_STK_SIZE 		512
-//任务控制块
-OS_TCB ScreenTaskTCB;
-//任务堆栈	
-CPU_STK Screen_TASK_STK[Screen_STK_SIZE];
-//任务函数
-void Screen_task(void *p_arg);
-
-
-//任务优先级
 #define DEMO1_TASK_PRIO		13
 //任务堆栈大小	
 #define DEMO1_STK_SIZE 		512
@@ -132,7 +120,7 @@ CPU_STK DEMO1_TASK_STK[DEMO1_STK_SIZE];
 void DEMO1_task(void *p_arg);
 
 //任务优先级
-#define DEMO2_TASK_PRIO		14
+#define DEMO2_TASK_PRIO		12
 //任务堆栈大小	
 #define DEMO2_STK_SIZE 		512
 //任务控制块
@@ -141,6 +129,19 @@ OS_TCB DEMO2TaskTCB;
 CPU_STK DEMO2_TASK_STK[DEMO2_STK_SIZE];
 //任务函数
 void DEMO2_task(void *p_arg);
+
+
+//任务优先级
+#define Screen_TASK_PRIO		14
+//任务堆栈大小	
+#define Screen_STK_SIZE 		512
+//任务控制块
+OS_TCB ScreenTaskTCB;
+//任务堆栈	
+CPU_STK Screen_TASK_STK[Screen_STK_SIZE];
+//任务函数
+void Screen_task(void *p_arg);
+
 
 //任务优先级
 #define PID_TASK_PRIO		15
@@ -746,7 +747,7 @@ void float_task(void *p_arg)
 			data_Parameterreceive();
 			DMA_Cmd(DMA2_Stream1, ENABLE);
 		}		
-		if(lidian.MAh<1635)//满容量8179，小于满容量的40%报警
+		if(lidian.MAh<1635)//满容量8179，小于满容量的20%报警
 		{
 			All_flag.speek2_flag=1;			
 		}
@@ -801,6 +802,7 @@ void Screen_task(void*p_arg)
 						//输入的被复制路径号变化时更新
 						if(HmiRouteCopiedNumTemp!=HmiRouteCopiedNum)
 							HmiRouteCopiedCount = GetRouteStationNum(HmiRouteCopiedNum);
+
 						
 						
 						//确定复制
@@ -843,6 +845,7 @@ void Screen_task(void*p_arg)
 							if(keynumber!=0)
 							{
 								HmiRfidNum = keynumber;//刷新地标号
+								keynumber = 0;
 							}										
 							//确定
 							if(HmiRouteEnter==1)
@@ -891,6 +894,7 @@ void Screen_task(void*p_arg)
 							if(keynumber!=0)
 							{
 								HmiRfidNum = keynumber;//刷新地标号
+								keynumber = 0;
 							}												
 							
 							//确定
@@ -944,6 +948,7 @@ void Screen_task(void*p_arg)
 							if(keynumber!=0)
 							{
 								HmiRfidNum = keynumber;//刷新地标号
+								keynumber = 0;
 							}			
 							
 							//确定
@@ -2005,7 +2010,7 @@ void DEMO_task(void *p_arg)
 				}
 				if(onway==1)
 				{
-					if((abs(front_cdh16.Distance<4)))
+					if((abs(front_cdh16.Distance<6)))
 					{
 						onway=0;
 						XuanZhuanNUM++;					
@@ -2022,7 +2027,7 @@ void DEMO_task(void *p_arg)
 				}
 				if(onway==1)
 				{
-					if((abs(front_cdh16.Distance<4)))
+					if((abs(front_cdh16.Distance<6)))
 					{
 						onway=0;
 						XuanZhuanNUM++;					
